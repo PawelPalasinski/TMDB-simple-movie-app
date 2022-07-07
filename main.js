@@ -11,16 +11,25 @@ const form = document.querySelector("#form");
 
 console.log(API_URL);
 
-getMovies(API_URL);
+// getMovies(API_URL);
 
-function getMovies(url) {
-  fetch(url)
-    .then((res) => res.json())
-    .then((data) => {
-      console.log(data);
-      showMovies(data.results);
-    });
-}
+// function getMovies(url) {
+//   fetch(url)
+//     .then((res) => res.json())
+//     .then((data) => {
+//       console.log(data);
+//       showMovies(data.results);
+//     });
+// }
+
+const getMovies = async (url) => {
+  const data = await fetch(url);
+  return data.json();
+};
+
+getMovies(API_URL)
+  .then((data) => showMovies(data.results))
+  .catch((error) => console.error("ERROR: " + error));
 
 function showMovies(data) {
   main.innerHTML = "";
