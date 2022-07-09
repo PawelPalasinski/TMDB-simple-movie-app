@@ -113,10 +113,12 @@ main {
 
 #tags {
   width: 80%;
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  align-items: center;
+  // display: flex;
+  // flex-wrap: wrap;
+  // justify-content: center;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  // align-items: center;
   margin: 10px auto;
   & .tag {
     color: #fff;
@@ -127,4 +129,8 @@ main {
     cursor: pointer;
     border-radius: 5px;
   }
+}
+
+.tag.selected {
+  background-color: red;
 }

@@ -1,14 +1,13 @@
 import { genre } from "./genres.js";
 import { tags, setGenre } from "./fn-genres.js";
-
-
+// import { highlightSelected } from "./fn-selection.js";
 
 const API_KEY = "api_key=d2b5af87a64d923fbc9cd42aa4272fb1";
 const BASE_URL = "https://api.themoviedb.org/3";
 const ALL_URL = "/discover/movie?sort_by=popularity.desc&";
 const IMG_URL = "https://image.tmdb.org/t/p/w500";
 const QUERY = "&query=";
-const API_URL = BASE_URL + ALL_URL + API_KEY;
+export const API_URL = BASE_URL + ALL_URL + API_KEY;
 
 const searchURL = BASE_URL + "/search/movie?" + API_KEY;
 
@@ -19,7 +18,7 @@ console.log(API_URL);
 
 getMovies(API_URL);
 
-function getMovies(url) {
+export function getMovies(url) {
   fetch(url)
     .then((res) => res.json())
     .then((data) => {
@@ -27,11 +26,12 @@ function getMovies(url) {
       showMovies(data.results);
       if (data.results.length === 0) {
         console.log("PUSTO");
-      };
+        getMovies(API_URL);
+      }
     });
 }
 
-function showMovies(data) {
+export function showMovies(data) {
   main.innerHTML = "";
   data.forEach((movie) => {
     const { title, overview, vote_average, poster_path } = movie;
@@ -75,4 +75,7 @@ form.addEventListener("submit", (e) => {
 });
 
 // genres
+
 setGenre();
+
+// highlightSelected();
