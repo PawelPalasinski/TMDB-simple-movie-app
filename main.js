@@ -82,3 +82,7 @@ setGenre();
 const genresBtn = document.querySelector(".genres-button");
 genresBtn.addEventListener("click", genresToggle);
 
+// pagination
+
+
+

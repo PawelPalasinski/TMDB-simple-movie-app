@@ -154,3 +154,25 @@ main {
     background-color: rgba(255, 255, 255, 0.3);
   }
 }
+
+.pagination {
+  display: flex;
+  margin: 10px 30px;
+  align-items: center;
+  justify-content: center;
+  color: #eee;
+  & .page {
+    padding: 20px;
+    cursor: pointer;
+    & .disabled {
+      cursor: not-allowed;
+      color: grey;
+    }
+  }
+  & .current {
+    padding: 10px 15px;
+    border-radius: 50%;
+    border: 3px solid rgba(255, 255, 255, 0.5);
+    font-weight: 600;
+  }
+}
