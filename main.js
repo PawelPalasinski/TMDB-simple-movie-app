@@ -13,16 +13,36 @@ const searchURL = BASE_URL + "/search/movie?" + API_KEY;
 const main = document.querySelector("#main");
 const form = document.querySelector("#form");
 
+//pagination elements
+
+const prev = document.querySelector("#prev");
+const current = document.querySelector("#current");
+const next = document.querySelector("#next");
+
+let currentPage = 1;
+let nextPage = 2;
+let prevPage = 3;
+let lastUrl = "";
+let totalPages = 100;
+
+
 console.log(API_URL);
 
 getMovies(API_URL);
 
 export function getMovies(url) {
+  lastUrl = url;
   fetch(url)
     .then((res) => res.json())
     .then((data) => {
       console.log(data);
       showMovies(data.results);
+
+      currentPage = data.page;
+      nextPage = data.page + 1;
+      prevPage = data.page - 1;
+      totalPages = data.total_pages;
+
       if (data.results.length === 0) {
         console.log("PUSTO");
         getMovies(API_URL);
@@ -55,6 +75,8 @@ export function showMovies(data) {
   });
 }
 
+//vote colors
+
 function getColor(vote) {
   if (vote >= 8) {
     return "green";
@@ -64,6 +86,8 @@ function getColor(vote) {
     return "red";
   }
 }
+
+//search by keyword
 
 form.addEventListener("submit", (e) => {
   e.preventDefault();
@@ -84,5 +108,24 @@ genresBtn.addEventListener("click", genresToggle);
 
 // pagination
 
+next.addEventListener("click", () => {
+  if (nextPage <= totalPages) {
+    pageCall(nextPage);
+  }
+})
 
 
+
+
+
+function pageCall(page) {
+  let urlSplit = lastUrl.split('?');
+  let queryParams = urlSplit[1].split('?');
+  let key = queryParams[queryParams.length - 1].split('=');
+  if (key[0] !== 'page') {
+    let url = lastUrl + '&page=' + page;
+    getMovies(url);
+  }
+}
+
+// https://www.youtube.com/watch?v=Oruem4VgRCs&t=6s 21:19
