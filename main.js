@@ -1,4 +1,3 @@
-import { genre } from "./genres.js";
 import { tags, setGenre } from "./fn-genres.js";
 import { genresToggle } from "./genres-btn.js";
 
@@ -38,7 +37,11 @@ export function showMovies(data) {
     const movieEl = document.createElement("div");
     movieEl.classList.add("movie");
     movieEl.innerHTML = `
-      <img src="${IMG_URL}${poster_path}" alt="image">
+      <img src="${
+        poster_path
+          ? IMG_URL + poster_path
+          : "https://i.pinimg.com/originals/d2/92/47/d2924780042a36811b6bd5473465f7fc.jpg"
+      }" alt="image">
       <div class="movie-info">
           <h3>${title}</h3>
           <span class="${getColor(vote_average)}">${vote_average}</span>
@@ -64,9 +67,7 @@ function getColor(vote) {
 
 form.addEventListener("submit", (e) => {
   e.preventDefault();
-
   const searchTerm = search.value;
-
   if (searchTerm) {
     getMovies(searchURL + QUERY + searchTerm);
   } else {
