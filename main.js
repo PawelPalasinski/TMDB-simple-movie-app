@@ -1,6 +1,6 @@
 import { genre } from "./genres.js";
 import { tags, setGenre } from "./fn-genres.js";
-// import { highlightSelected } from "./fn-selection.js";
+import { genresToggle } from "./genres-btn.js";
 
 const API_KEY = "api_key=d2b5af87a64d923fbc9cd42aa4272fb1";
 const BASE_URL = "https://api.themoviedb.org/3";
@@ -78,4 +78,6 @@ form.addEventListener("submit", (e) => {
 
 setGenre();
 
-// highlightSelected();
+const genresBtn = document.querySelector(".genres-button");
+genresBtn.addEventListener("click", genresToggle);
+

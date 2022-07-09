@@ -21,6 +21,7 @@ header {
   -webkit-box-pack: end;
       -ms-flex-pack: end;
           justify-content: flex-end;
+  gap: 10px;
   background-color: var(--secondary-color);
 }
 
@@ -141,8 +142,7 @@ main .movie .movie-info span.orange {
 
 #tags {
   width: 80%;
-  display: -ms-grid;
-  display: grid;
+  display: none;
   -ms-grid-columns: 1fr 1fr 1fr;
       grid-template-columns: 1fr 1fr 1fr;
   margin: 10px auto;
@@ -153,8 +153,33 @@ main .movie .movie-info span.orange {
   padding: 10px 15px;
   background-color: rgba(255, 255, 255, 0.2);
   margin: 5px;
-  display: inline-block;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
   cursor: pointer;
   border-radius: 5px;
+}
+
+#tags .tag:hover, #tags .tag:focus, #tags .tag:active {
+  background-color: rgba(255, 255, 255, 0.5);
+  color: var(--primary-color);
+}
+
+.genres-button {
+  background-color: transparent;
+  border: 2px solid var(--primary-color);
+  padding: 0.5rem 1rem;
+  border-radius: 50px;
+  font-size: 1rem;
+  color: rgba(255, 255, 255, 0.5);
+  cursor: pointer;
+}
+
+.genres-button:focus, .genres-button:hover {
+  outline: 0;
+  background-color: rgba(255, 255, 255, 0.3);
 }
 /*# sourceMappingURL=styles.css.map */
