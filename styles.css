@@ -207,9 +207,9 @@ main .movie .movie-info span.orange {
   cursor: pointer;
 }
 
-.pagination .page .disabled {
+.pagination .disabled {
   cursor: not-allowed;
-  color: grey;
+  color: rgba(238, 238, 238, 0.244);
 }
 
 .pagination .current {

@@ -39,6 +39,7 @@ export function getMovies(url) {
       showMovies(data.results);
 
       currentPage = data.page;
+      console.log(currentPage);
       nextPage = data.page + 1;
       prevPage = data.page - 1;
       totalPages = data.total_pages;
@@ -48,13 +49,14 @@ export function getMovies(url) {
       if (currentPage <= 1) {
         prev.classList.add("disabled");
         next.classList.remove("disabled");
-      } else if (currentPage >= lastPage) {
+      } else if (currentPage >= totalPages) {
         prev.classList.remove("disabled");
         next.classList.add("disabled");
       } else {
         prev.classList.remove("disabled");
         next.classList.remove("disabled");
       }
+      main.scrollIntoView({behavior: 'smooth'})
 
       if (data.results.length === 0) {
         console.log("PUSTO");
@@ -172,7 +174,3 @@ function pageCall(page) {
     getMovies(url);
   }
 }
-
-// https://www.youtube.com/watch?v=Oruem4VgRCs&t=6s 21:19
-
-//
