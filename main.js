@@ -26,6 +26,13 @@ let prevPage = 3;
 let lastUrl = "";
 let totalPages = 100;
 
+// modal
+
+const modal = document.getElementById("");
+const btn = document.getElementById("myBtn");
+const span = document.getElementsByClassName("close")[0];
+
+
 console.log(API_URL);
 
 getMovies(API_URL);
@@ -75,8 +82,24 @@ export function showMovies(data) {
       vote_count,
       genre_ids,
       popularity,
-      release_date, poster_path,
+      release_date,
+      original_title,
+      id,
+      poster_path,
     } = movie;
+
+    // document.querySelector(`#${btnId}`).addEventListener("submit", showModal);
+    // document.querySelector(`#${modalClose}`).addEventListener("click", hideModal);
+
+    // function showModal() {
+    //   document.querySelector(`#${modalId}`).style.display = "block";
+    //   console.log("KLIK");
+    // }
+
+    // function hideModal() {
+    //   modal.style.display = "none";
+    // }
+
     const movieEl = document.createElement("div");
 
     movieEl.classList.add("movie");
@@ -90,26 +113,63 @@ export function showMovies(data) {
     console.log(genreNames.join(", "));
 
     movieEl.innerHTML = `
-      <img src="${
-        poster_path
-          ? IMG_URL + poster_path
-          : "https://i.pinimg.com/originals/d2/92/47/d2924780042a36811b6bd5473465f7fc.jpg"
-      }" alt="image">
+      <button type="button" id="${id}">asasasas</button><img src="${
+      poster_path
+        ? IMG_URL + poster_path
+        : "https://i.pinimg.com/originals/d2/92/47/d2924780042a36811b6bd5473465f7fc.jpg"
+    }" alt="image">
       <div class="movie-info">
           <h3>${title}</h3>
-          <span class="${getColor(
-            vote_average
-          )}">${vote_average} / ${vote_count}</span>
-        <p>${genreNames.join(", ")}</p>
-        <p>Popularity: ${Math.round(popularity).toLocaleString()}</p>
-        <p>YEAR: ${release_date.slice(0,4)}</p>
+          <p>${genreNames.join(", ")} | ${release_date.slice(
+      0,
+      4
+    )} <span class="${getColor(
+      vote_average
+    )}">${vote_average}</span></p>        
       </div>
-      <div class="overview">
-          <h3>Overview</h3>
-          <p>${overview}</p>
+      
+      <div id="modal+${id}" class="modal">
+        <div class="modal-content">
+          <span id="close+${id}"class="close">x</span>
+          <div class="modal-content__sides">
+            <img src="${
+              poster_path
+                ? IMG_URL + poster_path
+                : "https://i.pinimg.com/originals/d2/92/47/d2924780042a36811b6bd5473465f7fc.jpg"
+            }" alt="image">
+          <div class="modal-content__img"></div>
+          <!-- -->
+          <div class="modal-content__right-side">
+          <h2 class="modal-content__title">${title}</h2>
+          <div class="modal-content__items">
+            <p class="modal-content__items--vote">${vote_average} / ${vote_count}</p>
+            <p class="modal-content__items--popularity">${Math.round(
+              popularity
+            ).toLocaleString()}</p>
+            <p class="modal-content__items--title">${original_title}</p>
+            <p class="modal-content__items--genre">${genreNames[0]}</p>
+          </div>
+          <h3 class="modal-content__about">About</h3>
+          <p class="modal-content__description">${overview}</p>
+          <div class="modal-content__buttons">
+            <button type="button" class="modal-content__buttons--add-to-watched">ADD TO WATCHED</button>
+            <button type="button" class="modal-content__buttons--add-to-queue">ADD TO QUEUE</button>
+          </div>
+          </div>
+        </div>
+        </div>
       </div>
       `;
     main.appendChild(movieEl);
+
+    // const btnId = id;
+    // const modalId = 'modal' + id;
+    // const modalClose = 'close' + id;
+
+    // btnId.addEventListener("click", console.log(id));
+
+
+
   });
 }
 
@@ -174,3 +234,27 @@ function pageCall(page) {
     getMovies(url);
   }
 }
+
+// modal
+
+// const modal = document.getElementById("myModal");
+// const btn = document.getElementById("myBtn");
+// const span = document.getElementsByClassName("close")[0];
+
+// btn.onclick = function () {
+//   modal.style.display = "block";
+//   console.log("click!");
+// };
+
+// span.onclick = function () {
+//   modal.style.display = "none";
+// };
+
+// window.onclick = function (event) {
+//   if (event.target == modal) {
+//     modal.style.display = "none";
+//   }
+// };
+
+
+// https://www.youtube.com/watch?v=zrv_SAnnmtk&t=983s 4:10

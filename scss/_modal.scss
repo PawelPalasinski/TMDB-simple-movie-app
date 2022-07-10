@@ -1,0 +1,94 @@
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgb(0,0,0);
+    background-color: rgba(0,0,0,0.4);
+    &-show {
+        display: block;
+    }
+}
+
+
+.close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+    margin-top: -40px;
+}
+
+.close:hover,
+.close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.modal-content {
+    background-color: #fefefe;
+    margin: 15% auto; 
+    padding: 20px;
+    padding-top: 48px;
+    border: 1px solid #888;
+    width: 280px;
+
+    &__img {
+        background-color: rgb(0, 0, 0);
+        height: 356.57px;
+        width: 240px;
+        border-radius: 5px;
+    }
+
+    &__buttons {
+        display: flex;
+
+    &--add-to-watched,
+    &--add-to-queue {
+        border-radius: 5px;
+        background: #fff;
+        cursor: pointer;
+        height: 44px;
+    }
+    &--add-to-watched{
+        margin-right: 15px;
+    }
+    &--add-to-watched:hover,
+    &--add-to-queue:hover {
+        background: #FF6B01;
+        color: #fff;
+    }
+    }
+}
+
+
+@media screen and (min-width: 768px) {
+    .modal-content {
+        width: 618px;
+
+        &__img {
+            margin-right: 32px;
+            width: 200%;
+        }
+
+        &__sides {
+            display: flex;
+        }
+    }
+}
+
+@media screen and (min-width: 1024px) {
+    .modal-content {
+        width: 882px;
+
+        &__img {
+            width: 100%;
+        }
+
+    }
+}
