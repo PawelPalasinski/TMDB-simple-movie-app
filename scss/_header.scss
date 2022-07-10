@@ -1,0 +1,25 @@
+header {
+  padding: 1rem;
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  background-color: var(--secondary-color);
+  & form {
+    & input {
+      background-color: transparent;
+      border: 2px solid var(--primary-color);
+      padding: 0.5rem 1rem;
+      border-radius: 50px;
+      font-size: 1rem;
+      color: rgba(0, 0, 0, 0.7);
+      &:focus,
+      &:hover {
+        outline: 0;
+        background-color: rgba(255, 255, 255, 0.3);
+      }
+      &::placeholder {
+        color: rgba(255, 255, 255, 0.5);
+      }
+    }
+  }
+}
