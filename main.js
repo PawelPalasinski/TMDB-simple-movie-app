@@ -1,5 +1,6 @@
 import { tags, setGenre } from "./fn-genres.js";
 import { genresToggle } from "./genres-btn.js";
+import { genre } from "./genres.js";
 
 const API_KEY = "api_key=d2b5af87a64d923fbc9cd42aa4272fb1";
 const BASE_URL = "https://api.themoviedb.org/3";
@@ -25,7 +26,6 @@ let prevPage = 3;
 let lastUrl = "";
 let totalPages = 100;
 
-
 console.log(API_URL);
 
 getMovies(API_URL);
@@ -43,6 +43,19 @@ export function getMovies(url) {
       prevPage = data.page - 1;
       totalPages = data.total_pages;
 
+      current.innerText = currentPage;
+
+      if (currentPage <= 1) {
+        prev.classList.add("disabled");
+        next.classList.remove("disabled");
+      } else if (currentPage >= lastPage) {
+        prev.classList.remove("disabled");
+        next.classList.add("disabled");
+      } else {
+        prev.classList.remove("disabled");
+        next.classList.remove("disabled");
+      }
+
       if (data.results.length === 0) {
         console.log("PUSTO");
         getMovies(API_URL);
@@ -53,9 +66,27 @@ export function getMovies(url) {
 export function showMovies(data) {
   main.innerHTML = "";
   data.forEach((movie) => {
-    const { title, overview, vote_average, poster_path } = movie;
+    const {
+      title,
+      overview,
+      vote_average,
+      vote_count,
+      genre_ids,
+      popularity,
+      release_date, poster_path,
+    } = movie;
     const movieEl = document.createElement("div");
+
     movieEl.classList.add("movie");
+
+    let genreArrayOfObj = genre.filter(function (g) {
+      return genre_ids.indexOf(g.id) !== -1;
+    });
+    console.log(genreArrayOfObj);
+
+    const genreNames = genreArrayOfObj.map((a) => a.name);
+    console.log(genreNames.join(", "));
+
     movieEl.innerHTML = `
       <img src="${
         poster_path
@@ -64,7 +95,12 @@ export function showMovies(data) {
       }" alt="image">
       <div class="movie-info">
           <h3>${title}</h3>
-          <span class="${getColor(vote_average)}">${vote_average}</span>
+          <span class="${getColor(
+            vote_average
+          )}">${vote_average} / ${vote_count}</span>
+        <p>${genreNames.join(", ")}</p>
+        <p>Popularity: ${Math.round(popularity).toLocaleString()}</p>
+        <p>YEAR: ${release_date.slice(0,4)}</p>
       </div>
       <div class="overview">
           <h3>Overview</h3>
@@ -109,23 +145,34 @@ genresBtn.addEventListener("click", genresToggle);
 // pagination
 
 next.addEventListener("click", () => {
-  if (nextPage <= totalPages) {
+  if (nextPage > 0) {
     pageCall(nextPage);
   }
-})
+});
 
-
-
-
+prev.addEventListener("click", () => {
+  if (prevPage <= totalPages) {
+    pageCall(prevPage);
+  }
+});
 
 function pageCall(page) {
-  let urlSplit = lastUrl.split('?');
-  let queryParams = urlSplit[1].split('?');
-  let key = queryParams[queryParams.length - 1].split('=');
-  if (key[0] !== 'page') {
-    let url = lastUrl + '&page=' + page;
+  let urlSplit = lastUrl.split("?");
+  let queryParams = urlSplit[1].split("?");
+  let key = queryParams[queryParams.length - 1].split("=");
+  if (key[0] !== "page") {
+    let url = lastUrl + "&page=" + page;
+    getMovies(url);
+  } else {
+    key[1] = page.toString();
+    let a = key.join("=");
+    queryParams[queryParams.length - 1] = a;
+    let b = queryParams.join("&");
+    let url = urlSplit[0] + "?" + b;
     getMovies(url);
   }
 }
 
 // https://www.youtube.com/watch?v=Oruem4VgRCs&t=6s 21:19
+
+//

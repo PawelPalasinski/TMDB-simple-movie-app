@@ -63,8 +63,10 @@ main {
     & .movie-info {
       color: #eee;
       display: flex;
+      flex-direction: column;
       align-items: center;
-      justify-content: space-between;
+      justify-content: center;
+      text-align: center;
       padding: 0.5rem 1rem 1rem;
       letter-spacing: 0.5px;
       & h3 {
