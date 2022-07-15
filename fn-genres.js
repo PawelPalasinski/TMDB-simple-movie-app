@@ -1,6 +1,6 @@
 import { genre } from "./genres.js";
 
-import { getMovies, API_URL } from "./main.js";
+import { getMovies, API_URL } from "./index.js";
 
 const tags = document.querySelector("#tags");
 
@@ -15,7 +15,6 @@ function setGenre() {
     el.addEventListener("click", () => {
       if (selectedGenre.length === 0) {
         selectedGenre.push(g.id);
-        console.log(g.id);
       } else {
         selectedGenre.splice(0, selectedGenre.length);
         el.click();

@@ -34,12 +34,11 @@
     padding-top: 48px;
     border: 1px solid #888;
     width: 280px;
-
     &__img {
-        background-color: rgb(0, 0, 0);
-        height: 356.57px;
-        width: 240px;
-        border-radius: 5px;
+        width: 280px;
+        & img {
+            max-height: 356.57px;
+        }
     }
 
     &__buttons {

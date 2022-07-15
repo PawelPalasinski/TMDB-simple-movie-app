@@ -1,4 +1,4 @@
-import { tags, setGenre } from "./fn-genres.js";
+import { setGenre } from "./fn-genres.js";
 import { genresToggle } from "./genres-btn.js";
 import { genre } from "./genres.js";
 
@@ -13,9 +13,8 @@ const searchURL = BASE_URL + "/search/movie?" + API_KEY;
 
 const main = document.querySelector("#main");
 const form = document.querySelector("#form");
-const body = document.querySelector("body");
 
-//pagination elements
+// Pagination elements
 
 const prev = document.querySelector("#prev");
 const current = document.querySelector("#current");
@@ -27,13 +26,7 @@ let prevPage = 3;
 let lastUrl = "";
 let totalPages = 100;
 
-// modal
-
-const modal = document.getElementById("");
-const btn = document.getElementById("myBtn");
-const span = document.getElementsByClassName("close")[0];
-
-console.log(API_URL);
+// API query
 
 getMovies(API_URL);
 
@@ -42,11 +35,10 @@ export function getMovies(url) {
   fetch(url)
     .then((res) => res.json())
     .then((data) => {
-      console.log(data);
+
       showMovies(data.results);
 
       currentPage = data.page;
-      console.log(currentPage);
       nextPage = data.page + 1;
       prevPage = data.page - 1;
       totalPages = data.total_pages;
@@ -66,7 +58,7 @@ export function getMovies(url) {
       main.scrollIntoView({ behavior: "smooth" });
 
       if (data.results.length === 0) {
-        console.log("PUSTO");
+        console.log("ERROR IN SEARCH");
         getMovies(API_URL);
       }
     });
@@ -95,10 +87,8 @@ export function showMovies(data) {
     let genreArrayOfObj = genre.filter(function (g) {
       return genre_ids.indexOf(g.id) !== -1;
     });
-    console.log(genreArrayOfObj);
 
     const genreNames = genreArrayOfObj.map((a) => a.name);
-    console.log(genreNames.join(", "));
 
     const movieBox = `
       <button type="button" class="movie__btn" id="${id}"><img class="poster-img" src="${
@@ -106,14 +96,12 @@ export function showMovies(data) {
         ? IMG_URL + poster_path
         : "https://i.pinimg.com/originals/d2/92/47/d2924780042a36811b6bd5473465f7fc.jpg"
     }" alt="image"></button>
-      <div class="movie-info">
-          <h3>${title}</h3>
-          <p>${genreNames.join(", ")} | ${release_date.slice(
-      0,
-      4
-    )} <span class="${getColor(
-      vote_average
-    )}">${vote_average}</span></p>        
+      <div class="movie__info">
+          <div class="info"><h3 class="info__title">${title}</h3>
+          <span class="${getColor(vote_average)}">${vote_average}</span></div>
+          <p class="info__genres-and-year">${genreNames.join(
+            ", "
+          )} | ${release_date.slice(0, 4)} </p>        
       </div>
       `;
 
@@ -165,7 +153,7 @@ export function showMovies(data) {
   });
 }
 
-//vote colors
+// Vote colors
 
 function getColor(vote) {
   if (vote >= 8) {
@@ -177,7 +165,7 @@ function getColor(vote) {
   }
 }
 
-//search by keyword
+// Search by keyword
 
 form.addEventListener("submit", (e) => {
   e.preventDefault();
@@ -189,14 +177,14 @@ form.addEventListener("submit", (e) => {
   }
 });
 
-// genres
+// Genres
 
 setGenre();
 
 const genresBtn = document.querySelector(".genres-button");
 genresBtn.addEventListener("click", genresToggle);
 
-// pagination
+// Pagination
 
 next.addEventListener("click", () => {
   if (nextPage > 0) {
