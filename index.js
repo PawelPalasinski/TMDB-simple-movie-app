@@ -39,6 +39,7 @@ export function getMovies(url) {
       showMovies(data.results);
 
       currentPage = data.page;
+      console.log(currentPage);
       nextPage = data.page + 1;
       prevPage = data.page - 1;
       totalPages = data.total_pages;
@@ -101,7 +102,7 @@ export function showMovies(data) {
           <span class="${getColor(vote_average)}">${vote_average}</span></div>
           <p class="info__genres-and-year">${genreNames.join(
             ", "
-          )} | ${release_date.slice(0, 4)} </p>        
+          )} | ${release_date} </p>        
       </div>
       `;
 
@@ -193,7 +194,8 @@ next.addEventListener("click", () => {
 });
 
 prev.addEventListener("click", () => {
-  if (prevPage <= totalPages) {
+  console.log(currentPage);
+  if (prevPage <= totalPages && currentPage-1 > 0) {
     pageCall(prevPage);
   }
 });
