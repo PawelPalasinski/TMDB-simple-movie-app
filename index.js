@@ -1,4 +1,4 @@
-import { tags, setGenre } from "./fn-genres.js";
+import { setGenre } from "./fn-genres.js";
 import { genresToggle } from "./genres-btn.js";
 import { genre } from "./genres.js";
 
@@ -14,7 +14,7 @@ const searchURL = BASE_URL + "/search/movie?" + API_KEY;
 const main = document.querySelector("#main");
 const form = document.querySelector("#form");
 
-//pagination elements
+// Pagination elements
 
 const prev = document.querySelector("#prev");
 const current = document.querySelector("#current");
@@ -26,7 +26,7 @@ let prevPage = 3;
 let lastUrl = "";
 let totalPages = 100;
 
-console.log(API_URL);
+// API query
 
 getMovies(API_URL);
 
@@ -35,7 +35,7 @@ export function getMovies(url) {
   fetch(url)
     .then((res) => res.json())
     .then((data) => {
-      console.log(data);
+
       showMovies(data.results);
 
       currentPage = data.page;
@@ -56,10 +56,10 @@ export function getMovies(url) {
         prev.classList.remove("disabled");
         next.classList.remove("disabled");
       }
-      main.scrollIntoView({behavior: 'smooth'})
+      main.scrollIntoView({ behavior: "smooth" });
 
       if (data.results.length === 0) {
-        console.log("PUSTO");
+        console.log("ERROR IN SEARCH");
         getMovies(API_URL);
       }
     });
@@ -75,8 +75,12 @@ export function showMovies(data) {
       vote_count,
       genre_ids,
       popularity,
-      release_date, poster_path,
+      release_date,
+      original_title,
+      id,
+      poster_path,
     } = movie;
+
     const movieEl = document.createElement("div");
 
     movieEl.classList.add("movie");
@@ -84,36 +88,73 @@ export function showMovies(data) {
     let genreArrayOfObj = genre.filter(function (g) {
       return genre_ids.indexOf(g.id) !== -1;
     });
-    console.log(genreArrayOfObj);
 
     const genreNames = genreArrayOfObj.map((a) => a.name);
-    console.log(genreNames.join(", "));
 
-    movieEl.innerHTML = `
-      <img src="${
-        poster_path
-          ? IMG_URL + poster_path
-          : "https://i.pinimg.com/originals/d2/92/47/d2924780042a36811b6bd5473465f7fc.jpg"
-      }" alt="image">
-      <div class="movie-info">
-          <h3>${title}</h3>
-          <span class="${getColor(
-            vote_average
-          )}">${vote_average} / ${vote_count}</span>
-        <p>${genreNames.join(", ")}</p>
-        <p>Popularity: ${Math.round(popularity).toLocaleString()}</p>
-        <p>YEAR: ${release_date.slice(0,4)}</p>
-      </div>
-      <div class="overview">
-          <h3>Overview</h3>
-          <p>${overview}</p>
+    const movieBox = `
+      <button type="button" class="movie__btn" id="${id}"><img class="poster-img" src="${
+      poster_path
+        ? IMG_URL + poster_path
+        : "https://i.pinimg.com/originals/d2/92/47/d2924780042a36811b6bd5473465f7fc.jpg"
+    }" alt="image"></button>
+      <div class="movie__info">
+          <div class="info"><h3 class="info__title">${title}</h3>
+          <span class="${getColor(vote_average)}">${vote_average}</span></div>
+          <p class="info__genres-and-year">${genreNames.join(
+            ", "
+          )} | ${release_date} </p>        
       </div>
       `;
+
+    const modal = `
+      <div id="${"modal" + id}" class="modal">
+        <div class="modal-content">
+          <span id="${"close" + id}"class="close">x</span>
+          <div class="modal-content__sides">
+            
+          <div class="modal-content__img">
+                    <img src="${
+                      poster_path
+                        ? IMG_URL + poster_path
+                        : "https://i.pinimg.com/originals/d2/92/47/d2924780042a36811b6bd5473465f7fc.jpg"
+                    }" alt="image"></div>
+
+          <div class="modal-content__right-side">
+          <h2 class="modal-content__title">${title}</h2>
+          <div class="modal-content__items">
+            <p class="modal-content__items--vote">${vote_average} / ${vote_count}</p>
+            <p class="modal-content__items--popularity">${Math.round(
+              popularity
+            ).toLocaleString()}</p>
+            <p class="modal-content__items--title">${original_title}</p>
+            <p class="modal-content__items--genre">${genreNames[0]}</p>
+          </div>
+          <h3 class="modal-content__about">About</h3>
+          <p class="modal-content__description">${overview}</p>
+          <div class="modal-content__buttons">
+            <button type="button" class="modal-content__buttons--add-to-watched">ADD TO WATCHED</button>
+            <button type="button" class="modal-content__buttons--add-to-queue">ADD TO QUEUE</button>
+          </div>
+          </div>
+        </div>
+        </div>
+      </div>
+      `;
+
+    movieEl.innerHTML = movieBox + modal;
     main.appendChild(movieEl);
+
+    document.getElementById(id).addEventListener("click", () => {
+      document.getElementById("modal" + id).style.display = "block";
+    });
+
+    document.getElementById("close" + id).addEventListener("click", () => {
+      document.getElementById("modal" + id).style.display = "none";
+    });
   });
 }
 
-//vote colors
+// Vote colors
 
 function getColor(vote) {
   if (vote >= 8) {
@@ -125,7 +166,7 @@ function getColor(vote) {
   }
 }
 
-//search by keyword
+// Search by keyword
 
 form.addEventListener("submit", (e) => {
   e.preventDefault();
@@ -137,14 +178,14 @@ form.addEventListener("submit", (e) => {
   }
 });
 
-// genres
+// Genres
 
 setGenre();
 
 const genresBtn = document.querySelector(".genres-button");
 genresBtn.addEventListener("click", genresToggle);
 
-// pagination
+// Pagination
 
 next.addEventListener("click", () => {
   if (nextPage > 0) {
@@ -153,7 +194,8 @@ next.addEventListener("click", () => {
 });
 
 prev.addEventListener("click", () => {
-  if (prevPage <= totalPages) {
+  console.log(currentPage);
+  if (prevPage <= totalPages && currentPage-1 > 0) {
     pageCall(prevPage);
   }
 });

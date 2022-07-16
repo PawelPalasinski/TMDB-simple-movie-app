@@ -67,57 +67,68 @@ main {
 }
 
 main .movie {
-  width: 300px;
+  width: 400px;
   margin: 1rem;
-  border-radius: 10px;
+  border-radius: 15px;
   -webkit-box-shadow: 4px 4px 5px rgba(0, 0, 0, 0.4);
           box-shadow: 4px 4px 5px rgba(0, 0, 0, 0.4);
 }
 
-main .movie img {
-  width: 100%;
+main .movie__btn {
+  background: none;
+  border: none;
+  padding: 0;
+  outline: inherit;
+  cursor: pointer;
 }
 
-main .movie .movie-info {
-  color: #eee;
+main .movie__btn .poster-img {
+  width: 400px;
+}
+
+main .movie .info {
+  font-family: "Roboto";
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 14px;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
-  -webkit-box-orient: vertical;
-  -webkit-box-direction: normal;
-      -ms-flex-direction: column;
-          flex-direction: column;
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
-  -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center;
-  text-align: center;
-  padding: 0.5rem 1rem 1rem;
-  letter-spacing: 0.5px;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  padding: 0 10px;
 }
 
-main .movie .movie-info h3 {
-  margin-top: 0;
+main .movie .info__title {
+  text-transform: uppercase;
+  color: #000000;
 }
 
-main .movie .movie-info span {
-  background-color: var(--primary-color);
+main .movie .info__genres-and-year {
+  color: #ff6b08;
+  padding: 0 10px;
+}
+
+main .movie .info span {
+  background-color: rgba(0, 0, 0, 0.5);
   padding: 0.25rem 0.5rem;
   border-radius: 5px;
   font-weight: bolder;
 }
 
-main .movie .movie-info span.green {
+main .movie .info span.green {
   color: lightgreen;
 }
 
-main .movie .movie-info span.red {
+main .movie .info span.red {
   color: red;
 }
 
-main .movie .movie-info span.orange {
+main .movie .info span.orange {
   color: orange;
 }
 
@@ -217,5 +228,96 @@ main .movie .movie-info span.orange {
   border-radius: 50%;
   border: 3px solid rgba(255, 255, 255, 0.5);
   font-weight: 600;
+}
+
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 1;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: black;
+  background-color: rgba(0, 0, 0, 0.4);
+}
+
+.close {
+  color: #aaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+  margin-top: -40px;
+}
+
+.close:hover,
+.close:focus {
+  color: black;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.modal-content {
+  background-color: #fefefe;
+  margin: 15% auto;
+  padding: 20px;
+  padding-top: 48px;
+  border: 1px solid #888;
+  width: 280px;
+}
+
+.modal-content__img {
+  width: 280px;
+}
+
+.modal-content__img img {
+  max-height: 356.57px;
+}
+
+.modal-content__buttons {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+.modal-content__buttons--add-to-watched, .modal-content__buttons--add-to-queue {
+  border-radius: 5px;
+  background: #fff;
+  cursor: pointer;
+  height: 44px;
+}
+
+.modal-content__buttons--add-to-watched {
+  margin-right: 15px;
+}
+
+.modal-content__buttons--add-to-watched:hover, .modal-content__buttons--add-to-queue:hover {
+  background: #FF6B01;
+  color: #fff;
+}
+
+@media screen and (min-width: 768px) {
+  .modal-content {
+    width: 618px;
+  }
+  .modal-content__img {
+    margin-right: 32px;
+    width: 200%;
+  }
+  .modal-content__sides {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+  }
+}
+
+@media screen and (min-width: 1024px) {
+  .modal-content {
+    width: 882px;
+  }
+  .modal-content__img {
+    width: 100%;
+  }
 }
 /*# sourceMappingURL=styles.css.map */
